@@ -26,7 +26,6 @@ function Navbarcomp() {
     }
 
   ];
-  // <Navbarcomp/>   
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Logo from "../../../atoms/NavBar/Logo"
 import Navbarcomp from "../../../atoms/NavBar/Navbarcomp"
 import { NavLink } from "react-router-dom";
@@ -11,7 +11,7 @@ const [list,setList]=useState(false)
 const favdata=localStorage.getItem("addtofav")
 const initialData = favdata ? JSON.parse(favdata) : []; 
 const [data,setData]=useState(initialData)
-
+useEffect(()=>{setData(initialData)},[data])
 const OpenMainMenu=()=>{
   setMain((prevState) => !prevState); 
 }

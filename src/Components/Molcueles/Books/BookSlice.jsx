@@ -9,14 +9,12 @@ import { ToastContainer, toast } from "react-toastify";
 
 function BookSlice({ searchedData, Type, image3 }) {
   const [addItem, setAddItem] = useState(JSON.parse(localStorage.getItem("addtofav")) || []);
-  const [detailsId, setDetailsId] = useState(null); // Track which item's details are shown
-
+  const [detailsId, setDetailsId] = useState(null);
   const bookDetail = (theid) => {
-    // Toggle visibility of the details for the specific item
     if (detailsId === theid) {
-      setDetailsId(null); // Hide if the same ID is clicked
+      setDetailsId(null); 
     } else {
-      setDetailsId(theid); // Show details for the new ID
+      setDetailsId(theid); 
     }
   };
 
@@ -42,7 +40,7 @@ function BookSlice({ searchedData, Type, image3 }) {
         Stephen King {Type}
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {(Type === "Villans" ? searchedData : searchedData)?.map((item) => (
+        {(Type === "" ? addItem : searchedData)?.map((item) => (
           <div key={item.id} className="border border-gray-200 shadow-lg rounded-lg p-4">
             <img src={image3} alt="Villain" className="w-full h-48 object-cover rounded-t-lg" />
             <div className="p-4">
@@ -89,7 +87,7 @@ function BookSlice({ searchedData, Type, image3 }) {
               </button>
               {Type === "Books" && (
                 <button 
-                  className="bg-red-600 text-white w-full py-2 rounded-b-lg hover:bg-red-800 transition-all duration-300" 
+                  className="bg-red-600  text-white w-full py-2 rounded-b-lg hover:bg-red-800 transition-all duration-300" 
                   onClick={() => addtofav(item.id)}
                 >
                   <FontAwesomeIcon icon={faHeart} />
@@ -100,18 +98,20 @@ function BookSlice({ searchedData, Type, image3 }) {
         ))}
       </div>
       <ToastContainer />
-      {Type === "" && (
+      {(Type === ""&&addItem.length>0) ? (
+        <>
         <button 
           onClick={() => { 
             localStorage.clear(); 
             setAddItem([]); 
             toast.success("Favorites cleared successfully"); 
           }} 
-          className="bg-red-600 text-white w-[50%] py-4 rounded-b-lg hover:bg-red-800 transition-all duration-300"
-        >
+          className="bg-red-600 my-2 text-white w-[50%] py-4 rounded-b-lg hover:bg-red-800 transition-all duration-300"
+          >
           Clear
         </button>
-      )}
+          </>
+      ):<p className="text-gray-500 text-xl my-10">There is no items</p>}
     </div>
   );
 }
